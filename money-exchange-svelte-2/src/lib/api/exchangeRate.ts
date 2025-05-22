@@ -4,6 +4,7 @@ export async function getExchangeRate(from: string, to: string): Promise<number>
     if (!res.ok) throw new Error('Error al obtener las tasas');
     
     const data = await res.json();
+    console.log('ExchangeRate API response:', data);
     return data.rates[to];
   } catch (err) {
     console.error('Error al consultar ExchangeRate API:', err);
