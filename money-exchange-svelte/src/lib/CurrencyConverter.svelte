@@ -10,7 +10,7 @@
   let resultColor = 'text-green-600';
 
   const currencies = ['CLP', 'USD', 'EUR', 'ARS', 'MXN'];
-  let extraCurrencies = ['USD', 'CLP', 'EUR'];
+  let extraCurrencies = ['USD', 'CLP', 'EUR', 'ARS', 'MXN'];
   let extraResults: Record<string, string> = {};
 
   async function fetchRate() {
@@ -105,8 +105,6 @@
 
 
   <div class="text-center">
-    <button class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 font-semibold">
-      Agregar conversiones extras
-    </button>
+
   </div>
 </div>
