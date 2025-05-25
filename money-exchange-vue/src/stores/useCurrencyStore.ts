@@ -1,4 +1,3 @@
-// src/stores/useCurrencyStore.ts
 import { defineStore } from 'pinia'
 import { getExchangeRate } from './useExchangeRate.ts'
 
@@ -31,7 +30,6 @@ export const useCurrencyStore = defineStore('currency', {
         console.warn(`No se pudo obtener la tasa entre ${from} y ${to}`)
         this.exchangeRate = 1
       }
-      //this.exchangeRate = Math.random() * (1.5 - 0.5) + 0.5
     },
 
     async fetchExtraRate(to: string) {
@@ -44,15 +42,14 @@ export const useCurrencyStore = defineStore('currency', {
       }
     },
 
-    // convertExtra(currency: string): string {
-    //   // if (currency === this.fromCurrency) return `${this.amount}`
-    //   // return (this.amount * this.exchangeRate).toFixed(2)
-    //   if (currency === this.fromCurrency) return `${this.amount}`
-    //   const rate = this.extraRates[currency]
-    //   if (!rate) return '...'
-    //   return (this.amount * rate).toFixed(2)
-    // },
     convertExtra(to: string): string {
+      if (to === this.fromCurrency) {
+        return this.amount.toFixed(2)
+      }
+      if (to === this.toCurrency) {
+        return (this.amount * this.exchangeRate).toFixed(2)
+      }
+
       const rate = this.extraRates[to]
       if (rate === undefined) return '...'
       return (this.amount * rate).toFixed(2)
@@ -65,8 +62,6 @@ export const useCurrencyStore = defineStore('currency', {
     },
 
     async addExtraConversion() {
-      // const defaultCurrency = this.currencies.find(c => c !== this.fromCurrency && c !== this.toCurrency && !this.extraConversions.includes(c))
-      // this.extraConversions.push(defaultCurrency || this.currencies[0])
         const defaultCurrency = this.currencies.find(c => 
         c !== this.fromCurrency &&
         c !== this.toCurrency &&
@@ -89,8 +84,7 @@ export const useCurrencyStore = defineStore('currency', {
           if (!isNaN(rate)) {
             this.extraRates[to] = rate
             this.extraConversions.push(to)}
-           } else {
-          // También mostramos la misma moneda para referencia
+          } else {
           this.extraRates[to] = 1
           this.extraConversions.push(to)
         }
